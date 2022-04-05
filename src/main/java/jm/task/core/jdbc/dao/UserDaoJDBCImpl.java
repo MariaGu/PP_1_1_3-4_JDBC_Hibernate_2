@@ -39,7 +39,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 "VALUES (?, ?, ?)";
 
         try (Connection connection = Util.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
@@ -66,8 +66,8 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> userList = new ArrayList<>();
         String query = "SELECT id, name, last_name, age FROM user ";
         try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
             while (resultSet.next()) {
                 long id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -77,7 +77,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setId(id);
                 userList.add(user);
             }
-            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
