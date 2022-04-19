@@ -16,13 +16,26 @@ import org.hibernate.cfg.Environment;
 
 public class Util {
 
+    private static Util instance;
+
+    private Util() {
+
+    }
+
+    public static Util getInstance() {
+        if (instance == null) {
+            instance = new Util();
+        }
+        return instance;
+    }
+
     private static String user = "root";
     private static String password = "Mar666036*";
     private static String url = "jdbc:mysql://localhost:3306/users";
 
     private static SessionFactory sessionFactory;
 
-    public static SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
@@ -52,7 +65,7 @@ public class Util {
         return sessionFactory;
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, user, password);
